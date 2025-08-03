@@ -28,23 +28,12 @@ jobs:
 
     - name: Trivy Installation
       run: |
+        sudo apt-get install wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
         sudo apt-get update -y
-        sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+        sudo apt-get install trivy -y
 
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
-          | gpg --dearmor \
-          | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
-
-        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" \
-          | sudo tee -a /etc/apt/sources.list.d/trivy.list
-
-        sudo apt-get update -y
-
-        # 👇 Non-interactive upgrade to suppress prompts
-        sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -yq
-
-        # 👇 Trivy install (also non-interactive)
-        sudo DEBIAN_FRONTEND=noninteractive apt-get install -y trivy
 
 
     - name: Trivy FS Scan
