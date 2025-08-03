@@ -81,7 +81,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app-jar
-        path: app/*.jar
+        path: target/*.jar
 
     - uses: actions/checkout@v4
       with:
@@ -129,4 +129,4 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: sksahil/bankapp:latest
+        tags: sksahilhaque/bankapp:latest
