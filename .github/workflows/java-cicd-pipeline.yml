@@ -130,4 +130,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: sksahilhaque/bankapp:latest
+        tags: sksahil/bankapp:latest
